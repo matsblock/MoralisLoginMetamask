@@ -1,0 +1,45 @@
+
+<!--
+	1) AUTHENTICATE WITH METAMASK
+	2) ADD USER TO DB
+	3) ADD MORE DATA TO THE USER PROFILE
+-->
+
+<html>
+  <head>
+    <title>Metamask Demo</title>
+
+	<script src="https://cdn.jsdelivr.net/npm/web3@latest/dist/web3.min.js"></script>
+	<script src="https://unpkg.com/moralis/dist/moralis.js"></script>
+  </head>
+
+  <body>
+
+	<button id="loginButton" onclick="login()">Login with Metamask</button>
+    <a>Address: </a>
+    <a id="address"></a>
+
+	<script>
+		Moralis.initialize("LVfYTWUxBQz5KomlpuKzrkthbFUePSkjPdxEOato"); // Application id from moralis.io
+		Moralis.serverURL = "https://wlwddbgbw0je.usemoralis.com:2053/server"; //Server url from moralis.io
+	
+		async function login(){
+			console.log("login clicked");
+			var user = await Moralis.Web3.authenticate();
+			if(user){
+				console.log(user);
+				user.set("nickname","VITALIK");
+				user.set("fav_color","blue");
+				user.save();
+                console.log("User Address: ", user.get('ethAddress'))
+                document.getElementById("address").innerHTML =  user.get('ethAddress');
+                document.getElementById("loginButton").setAttribute("hidden", "hidden");
+            }
+			}
+
+
+
+	
+	</script>
+  </body>
+</html>
